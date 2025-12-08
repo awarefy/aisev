@@ -1,0 +1,65 @@
+version: "3.8"
+
+services:
+  postgresdb:
+    image: postgres:16
+    container_name: aisev-db
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME:-aisev}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: aisev-backend
+    restart: always
+    depends_on:
+      postgresdb:
+        condition: service_healthy
+    environment:
+      DB_HOST: postgresdb
+      DB_PORT: 5432
+      DB_USER: ${DB_USER:-postgres}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME:-aisev}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      # Awarefy Agent API URL (VPC内部通信)
+      AWAREFY_AGENT_API_URL: ${AWAREFY_AGENT_API_URL:-http://awarefy-agent-local.AwarefyBackendCluster:8080}
+    expose:
+      - "8000"
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.prod
+    container_name: aisev-frontend
+    restart: always
+    depends_on:
+      - backend
+    expose:
+      - "80"
+
+  nginx:
+    image: nginx:alpine
+    container_name: aisev-nginx
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - frontend
+      - backend
+
+volumes:
+  postgres_data:
