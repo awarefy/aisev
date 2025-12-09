@@ -166,7 +166,7 @@ const models = ref([]);
 
 async function fetchModels() {
   try {
-    const res = await fetch("http://localhost:8000/ai_models", {
+    const res = await fetch("/api/ai_models", {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     });
@@ -242,7 +242,7 @@ function registerModel() {
     : 1;
   const payload = { id: newId, ...registerForm.value };
   console.log("登録データ:", JSON.stringify(payload, null, 2));
-  fetch("http://localhost:8000/ai_models", {
+  fetch("/api/ai_models", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),
@@ -298,7 +298,7 @@ function updateModel() {
   }
   const payload = { ...updateForm.value };
   console.log("更新データ:", JSON.stringify(payload, null, 2));
-  fetch(`http://localhost:8000/ai_models/${updateForm.value.id}`, {
+  fetch(`/api/ai_models/${updateForm.value.id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),
@@ -322,7 +322,7 @@ async function deleteSelectedModel() {
   if (!confirm(t("confirmDelete"))) return;
   try {
     const res = await fetch(
-      `http://localhost:8000/ai_models/${selectedModelId.value}`,
+      `/api/ai_models/${selectedModelId.value}`,
       {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },

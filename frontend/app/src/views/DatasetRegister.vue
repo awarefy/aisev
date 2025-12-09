@@ -302,9 +302,9 @@ async function handleSubmit() {
   }
 
   // API Destination Branching
-  let apiUrl = "http://localhost:8000/datasets/register";
+  let apiUrl = "/api/datasets/register";
   if (acPresetEnable.value) {
-    apiUrl = "http://localhost:8000/datasets/register/gsn";
+    apiUrl = "/api/datasets/register/gsn";
   }
   console.log("apiUrl", apiUrl);
 

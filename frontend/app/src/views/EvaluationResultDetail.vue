@@ -94,7 +94,7 @@ const detailData = ref<any[][]>([]);
 async function fetchDetailData() {
   const resultId = route.query.resultId;
   if (!resultId) return;
-  const apiUrl = `http://localhost:8000/evaluation_results/${resultId}/detail`;
+  const apiUrl = `/api/evaluation_results/${resultId}/detail`;
   try {
     const res = await fetch(apiUrl, {
       method: "GET",
@@ -245,7 +245,7 @@ async function exportToJson() {
     console.log("Exporting JSON file:", newJsonData);
 
     const a_scores_promise = await fetch(
-        `http://localhost:8000/evaluation_results/${route.query.resultId}/10perspective_scores`,
+        `/api/evaluation_results/${route.query.resultId}/10perspective_scores`,
         {
           method: "GET",
           headers: { "Content-Type": "application/json" },
@@ -254,7 +254,7 @@ async function exportToJson() {
     const a_scores = await a_scores_promise.json();
     console.log("Exported scores:", a_scores);
 
-    const res = await fetch("http://localhost:8000/evaluation_results/");
+    const res = await fetch("/api/evaluation_results/");
     const all_results  = await res.json();
     const result = all_results.find((r: any) => String(r.id) === String(route.query.resultId));
     console.log("Exported results:", result);

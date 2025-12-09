@@ -188,7 +188,7 @@ const totalPages = computed(() =>
 
 async function fetchQuestions() {
   try {
-    const response = await fetch("http://localhost:8000/qualitative_datasets", {
+    const response = await fetch("/api/qualitative_datasets", {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     });
@@ -243,7 +243,7 @@ function addQuestion() {
     contents: newQuestion.value.contents.filter((c: string) => c.trim() !== ""),
   };
   console.log("Add data:", JSON.stringify(payload, null, 2));
-  fetch("http://localhost:8000/qualitative_dataset", {
+  fetch("/api/qualitative_dataset", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -278,7 +278,7 @@ function deleteSelectedQuestion() {
   if (!confirmed) return;
   console.log("data:", { id: selectedQuestionId.value });
   fetch(
-    `http://localhost:8000/qualitative_datasets/${selectedQuestionId.value}`,
+    `/api/qualitative_datasets/${selectedQuestionId.value}`,
     {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },

@@ -134,7 +134,7 @@ const execQuantitativeEvaluation = async () => {
   );
   try {
     const res = await fetch(
-      `http://localhost:8000/evaluation_results/${resultId.value}/quantitative_result`,
+      `/api/evaluation_results/${resultId.value}/quantitative_result`,
       {
         method: "POST",
         headers: {
@@ -166,7 +166,7 @@ const fetchQuantitativeStatus = async () => {
     );
     try {
       const res = await fetch(
-        `http://localhost:8000/evaluation_results/${resultId.value}/status`
+        `/api/evaluation_results/${resultId.value}/status`
       );
       const data = await res.json();
       quantitativeStatus.value = data;
@@ -202,7 +202,7 @@ const fetchModelName = async () => {
   const requestJson = { modelId: modelId.value };
   console.log("fetchModelName request:", JSON.stringify(requestJson));
   try {
-    const res = await fetch(`http://localhost:8000/ai_models/${modelId.value}`);
+    const res = await fetch(`/api/ai_models/${modelId.value}`);
     const data = await res.json();
     modelName.value = data.ai_model.name;
   } catch (e) {
@@ -218,7 +218,7 @@ const fetchQuestions = async () => {
   console.log("fetchQuestions request:", JSON.stringify(requestJson));
   try {
     const res = await fetch(
-      `http://localhost:8000/qualitative_datasets/by_evaluation/${evaluationId.value}`
+      `/api/qualitative_datasets/by_evaluation/${evaluationId.value}`
     );
     const result = await res.json();
     const datasets = result.qualitative_datasets;
@@ -283,7 +283,7 @@ const registerQualitativeResult = async () => {
   };
   try {
     const res = await fetch(
-      `http://localhost:8000/evaluation_results/${resultId.value}/qualitative_result`,
+      `/api/evaluation_results/${resultId.value}/qualitative_result`,
       {
         method: "POST",
         headers: {

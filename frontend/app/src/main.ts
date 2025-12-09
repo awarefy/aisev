@@ -5,7 +5,7 @@ import router from "./router";
 import { createI18n } from "vue-i18n";
 
 export const rtURL = "http://localhost:5010/llm-eval-launch";
-export const initURL = "http://localhost:8000/migrate-sample-data-initialize";
+export const initURL = "/api/migrate-sample-data-initialize";
 
 const messages = {
   ja: {

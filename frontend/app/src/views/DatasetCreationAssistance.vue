@@ -213,7 +213,7 @@ function addContent() {
 // Get AI model list from API
 async function fetchModels() {
   try {
-    const res = await fetch("http://localhost:8000/ai_models", {
+    const res = await fetch("/api/ai_models", {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     });
@@ -249,7 +249,7 @@ async function runScoring(idx: number) {
   item.paraphraseResults = [];
 
   try {
-    const response = await fetch("http://localhost:8000/scoring-dataset", {
+    const response = await fetch("/api/scoring-dataset", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

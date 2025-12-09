@@ -103,7 +103,7 @@ const breadcrumbs = computed(() => [
 
 onMounted(async () => {
   try {
-    const res = await fetch("http://localhost:8000/evaluation_results/");
+    const res = await fetch("/api/evaluation_results/");
     if (!res.ok) throw new Error("API取得失敗");
     const data = await res.json();
     console.log("Evaluation Results:", data);
@@ -111,7 +111,7 @@ onMounted(async () => {
     // Retrieve evaluation for 10 perspectives
     const get_scores = async (id: number) => {
       const a_scores_promise = await fetch(
-        `http://localhost:8000/evaluation_results/${id}/10perspective_scores`,
+        `/api/evaluation_results/${id}/10perspective_scores`,
         {
           method: "GET",
           headers: { "Content-Type": "application/json" },

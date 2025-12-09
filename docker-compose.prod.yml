@@ -6,9 +6,9 @@ services:
     container_name: aisev-db
     restart: always
     environment:
-      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_DB: ${DB_NAME:-aisev}
+      POSTGRES_DB: ${DB_NAME}
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -26,15 +26,15 @@ services:
     depends_on:
       postgresdb:
         condition: service_healthy
+    extra_hosts:
+      - "${DOCKER_HOST_NAME:-host.docker.internal}:${DOCKER_HOST_IP:-host-gateway}"
     environment:
       DB_HOST: postgresdb
       DB_PORT: 5432
-      DB_USER: ${DB_USER:-postgres}
+      DB_USER: ${DB_USER}
       DB_PASSWORD: ${DB_PASSWORD}
-      DB_NAME: ${DB_NAME:-aisev}
-      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
-      # Awarefy Agent API URL (VPC内部通信)
-      AWAREFY_AGENT_API_URL: ${AWAREFY_AGENT_API_URL:-http://awarefy-agent-local.AwarefyBackendCluster:8080}
+      DB_NAME: ${DB_NAME}
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
     expose:
       - "8000"
 

@@ -27,4 +27,20 @@ RUN chmod +x /app/insert_proxy_to_openai.sh
 RUN sed -i 's/\r$//' /app/insert_proxy_to_openai.sh
 RUN /app/insert_proxy_to_openai.sh
 
+# Set working directory
+WORKDIR /app
 
+# Set PYTHONPATH for module imports
+ENV PYTHONPATH=/app
+
+# Copy source code
+COPY src/ ./src/
+
+# Copy dataset for AISI preset data initialization
+COPY dataset/ ./dataset/
+
+# Expose port
+EXPOSE 8000
+
+# Start the FastAPI application
+CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000"]

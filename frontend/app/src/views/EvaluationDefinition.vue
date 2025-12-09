@@ -256,7 +256,7 @@ const questions = ref([]);
 // Fetch Evaluation Definitions
 async function fetchEvaluations() {
   try {
-    const response = await fetch("http://localhost:8000/evaluations", {
+    const response = await fetch("/api/evaluations", {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     });
@@ -282,7 +282,7 @@ onMounted(async () => {
   try {
     await fetchEvaluations();
     const datasetResponse = await fetch(
-      "http://localhost:8000/quantitative_datasets",
+      "/api/quantitative_datasets",
       {
         method: "GET",
         headers: { "Content-Type": "application/json" },
@@ -297,7 +297,7 @@ onMounted(async () => {
       : [];
 
     const questionResponse = await fetch(
-      "http://localhost:8000/qualitative_datasets",
+      "/api/qualitative_datasets",
       {
         method: "GET",
         headers: { "Content-Type": "application/json" },
@@ -354,7 +354,7 @@ const deleteDefinition = async (id) => {
   if (!confirmed) return;
   try {
     const response = await fetch(
-      `http://localhost:8000/evaluation/${encodeURIComponent(id)}`,
+      `/api/evaluation/${encodeURIComponent(id)}`,
       {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
@@ -423,7 +423,7 @@ const registDefinition = async () => {
   console.log("Evaluation Definition:", definition);
 
   try {
-    const response = await fetch("http://localhost:8000/evaluation", {
+    const response = await fetch("/api/evaluation", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

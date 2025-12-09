@@ -82,7 +82,7 @@ const definitions = ref<any[]>([]);
 // Retrieve AI model list from API
 async function fetchModels() {
   try {
-    const res = await fetch("http://localhost:8000/ai_models", {
+    const res = await fetch("/api/ai_models", {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     });
@@ -103,7 +103,7 @@ async function fetchModels() {
 // Retrieve evaluation definitions from API
 async function fetchDefinitions() {
   try {
-    const res = await fetch("http://localhost:8000/evaluations", {
+    const res = await fetch("/api/evaluations", {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     });
@@ -135,7 +135,7 @@ async function runEvaluation() {
     evaluator_ai_model_id: selectedJudgeAI.value,
   };
   try {
-    const res = await fetch("http://localhost:8000/evaluation_result", {
+    const res = await fetch("/api/evaluation_result/", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
