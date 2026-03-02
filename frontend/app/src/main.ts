@@ -4,7 +4,10 @@ import App from "./App.vue";
 import router from "./router";
 import { createI18n } from "vue-i18n";
 
-export const rtURL = "http://localhost:5010/llm-eval-launch";
+const defaultRtLaunchUrl = import.meta.env.DEV
+  ? "http://localhost:5010/llm-eval-launch"
+  : "/llm-eval-launch";
+export const rtURL = import.meta.env.VITE_RT_LAUNCH_URL || defaultRtLaunchUrl;
 export const initURL = "/api/migrate-sample-data-initialize";
 
 const messages = {

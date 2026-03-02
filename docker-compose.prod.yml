@@ -60,6 +60,35 @@ services:
     depends_on:
       - frontend
       - backend
+      - manager-backend
+
+  manager-backend:
+    build:
+      context: ./llm-evaluation-system/manager-backend
+      dockerfile: Dockerfile
+    container_name: aisev-manager-backend
+    restart: always
+    environment:
+      AUTOMATED_RT_IMAGE: automated-rt-app:latest
+      HOST: ${LLM_EVAL_HOST:-localhost}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      - automated-rt-app
+    expose:
+      - "5010"
+
+  automated-rt-app:
+    build:
+      context: ./llm-evaluation-system/automated_rt
+      dockerfile: Dockerfile
+    image: automated-rt-app:latest
+    container_name: aisev-automated-rt-app
+    restart: always
+    environment:
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+    ports:
+      - "18001:8000"
 
   # pgweb:
   #   image: sosedoff/pgweb:latest
